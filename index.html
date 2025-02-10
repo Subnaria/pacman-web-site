@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacman Web Site</title>
+    <link rel="stylesheet" href="Contents/Css/style.css">
+    <link rel="icon" href="https://media.discordapp.net/attachments/1331600541599535169/1337128941546377387/ab67616d0000b273dc3e2814b407ab8912fe6094.png?ex=67a8f4de&is=67a7a35e&hm=ef4b796b2c51f3cec3919c1c4d6ebf0f504a1606360ae7ba0b3bc0b3c8547276&=&format=webp&quality=lossless">
+</head>
+<body>
+
+    <!-- Photo de profil en haut à gauche -->
+    <a href="http://pacman.klaynight.fr/" target="_blank">
+        <img id="profile-img" src="https://images-ext-1.discordapp.net/external/d5WdvQOTntAIkbh-DDzi1SkyqgwPpEBVsYnHpnSifwc/https/is1-ssl.mzstatic.com/image/thumb/Music211/v4/53/b1/05/53b105b6-7ef7-2441-bdcd-f21b3335121b/artwork.jpg/1200x630bb.jpg%2522%2C?format=webp" alt="Profil Pacman">
+    </a>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <a href="javascript:void(0);" onclick="showSection('accueil')">Accueil</a>
+        <a href="javascript:void(0);" onclick="showSection('discord')">Discord</a>
+        <a href="javascript:void(0);" onclick="showSection('jeux')">Jeux</a>
+    </nav>
+
+    <!-- Contenu des sections -->
+    <section id="accueil">
+        <p>Mon mail pro : <strong>csc.pacman@studio.klaynight.fr</strong></p>
+        <strong><h2 class="typing-text">Pacman</h2></section>
+    </section>
+
+    <section id="discord">
+        <h2>Discord</h2>
+        <p>Rejoignez-nous sur Discord !</p>
+        <div class="neon-container">
+            <!-- Carré Discord avec image et lien -->
+            <div class="neon-box" style="background-image: url('https://yt3.googleusercontent.com/6HIzhn34vs9qreYL-5Ai0vO3T5sKP51WO-L8ZKV9Bb9l1ljgU44tARlZ3I87fNY9_I27QsdkRQ=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');">
+                <div class="discord-banner">
+                    <a href="https://discord.gg/GfFy3E6GVf" target="_blank">Le Baudo Crew</a>
+                </div>
+            </div>
+            <!-- Deuxième carré Discord -->
+            <div class="neon-box" style="background-image: url('https://cdn.discordapp.com/splashes/1197867213110132748/a5dab2c8dfcfbcb13adca2c04cc703cc.jpg?size=2048');">
+                <div class="discord-banner">
+                    <a href="https://discord.gg/Y9wFSqvU" target="_blank">WarTycoon Fr</a>
+                </div>
+            </div>
+
+            <div class="neon-box" style="background-image: url('https://images-ext-1.discordapp.net/external/am0mKJI8FqR3b6B7-Q3PagyhY-2o7RW7NC4834j7SG8/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/1242818275579002905/901da2e0bdb23bf1a58136769de0f219.webp?format=webp&width=671&height=671');">
+                <div class="discord-banner">
+                    <a href="https://discord.gg/h4E74mZvFY" target="_blank">The Ats</a>
+                </div>
+        </div>
+    </section>
+    <section id="jeux">
+        <h2>Jeux</h2>
+        <p>Bientôt plusieurs jeux développés par <a href="https://klaynight.fr/" target="_blank">Klaynight</a> et <a href="https://pacman.klaynight.fr/" target="_blank">Pacman</a> ...</p>
+        <br>
+    
+        <!-- Conteneur pour le jeu Snake -->
+        <div class="game-container">
+            <a href="https://snake-game.cscpacman.fr/" target="_blank">
+                <div class="game-image-container">
+                    <img src="Contents/img/screen_snake.png" alt="Snake Game" class="game-image">
+                    <div class="game-text">Snake Game By Pacman V.0.1</div>
+                </div>
+            </a>
+        </div>
+    
+        <!-- Conteneur pour le jeu Morpion -->
+        <div class="game-container">
+            <a href="https://morpion-game.cscpacman.fr/" target="_blank">
+                <div class="game-image-container">
+                    <img src="Contents/img/morpion_screen.png" alt="Morpion Game" class="game-image">
+                    <div class="game-text">Morpion Game</div>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+
+    <footer>
+        Design By Pacman. Thanks you <a href="https://klaynight.fr/" target="_blank">Klaynight</a>
+    </footer>
+
+    <script src="Contents/Js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+/* Style du body avec un fond bleu foncé */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding-top: 80px; /* Marge en haut pour que le contenu ne soit pas caché sous la barre de navigation */
+}
+
+/* Fond dégradé bleu très foncé */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom right, #020c1b, #0a1f44);
+    z-index: -1;
+}
+
+/* Navigation avec néon sombre par défaut */
+nav {
+    background-color: rgba(20, 40, 80, 0.9);
+    padding: 10px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    flex-wrap: wrap;
+    box-shadow: 0 0 10px #1c2d42, 0 0 20px #1c2d42; /* Ombre bleu foncé */
+    transition: box-shadow 0.3s ease;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 15px 30px;
+    margin: 0 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #1a3d66;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #3498db;
+}
+
+/* Changer l'ombre de la navigation au survol */
+nav:hover {
+    box-shadow: 0 0 20px #00aaff, 0 0 40px #00aaff; /* Ombre bleue au survol */
+}
+
+/* Sections */
+section {
+    display: none;
+    margin: 20px;
+    padding: 20px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    z-index: 1;
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 80vh; /* Utilise 80% de la hauteur de la fenêtre */
+}
+
+section h2, section p, section a {
+    color: white !important;
+}
+
+/* Footer arrondi avec néon bleu foncé */
+footer {
+    background-color: rgba(20, 40, 80, 0.9);
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 80%;
+    bottom: 20px; /* Décolle la bannière du bas */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #1c2d42, 0 0 20px #1c2d42; /* Ombre bleu foncé */
+    transition: box-shadow 0.3s ease;
+}
+
+footer:hover {
+    box-shadow: 0 0 20px #00aaff, 0 0 40px #00aaff; /* Ombre bleue au survol */
+}
+
+/* Animation d'écriture du texte "Pacman" */
+.typing-text {
+    display: inline-block;
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
+    border-right: 3px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 4s steps(7) 1s forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Position et style de la photo de profil en haut à gauche */
+#profile-img {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 60px; /* Taille initiale de la photo */
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    box-shadow: 0 0 10px #1c2d42, 0 0 20px #1c2d42; /* Ombre de la photo */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+#profile-img:hover {
+    transform: scale(1.2); /* Grossissement de la photo */
+    box-shadow: 0 0 20px #00aaff, 0 0 40px #00aaff; /* Néon bleu */
+}
+
+#discord h2 {
+    margin-top: 20px;
+    margin-bottom: 30px; /* Espace entre le texte Discord et les carrés */
+}
+
+.neon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    flex-wrap: wrap;
+}
+
+/* Style des néon boxes avec ajustement pour mobile et PC */
+.neon-box {
+    width: 500px;
+    height: 350px;
+    background-color: rgba(0, 0, 0, 0.4); /* Fond sombre des carrés */
+    box-shadow: 0 0 30px #00aaff, 0 0 60px #00aaff; /* Ombre du néon plus visible */
+    border-radius: 15px;
+    margin: 0;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.neon-box:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7); /* Vignette noire plus forte */
+    border-radius: 15px;
+}
+
+.neon-box:hover {
+    transform: scale(1.1) rotateY(-10deg) rotateX(5deg);
+    box-shadow: 0 0 80px #00aaff, 0 0 120px #00aaff, 0 0 160px #00aaff;
+}
+
+.neon-box:hover:before {
+    background: transparent;
+}
+
+.neon-box .discord-banner {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    width: 90%;
+}
+
+.neon-box .discord-banner a {
+    text-decoration: none;
+    color: #00aaff;
+    font-size: 1.2em;
+}
+
+.neon-box .discord-banner a:hover {
+    color: #ff00ff;
+}
+
+strong {
+    font-weight: bolder;
+}
+
+/* Rendre les néon boxes plus petites et uniquement texte visible sur mobile */
+@media (max-width: 768px) {
+    .neon-box {
+        width: 250px;
+        height: 150px;
+        background-size: contain; /* L'image de fond sera contenue */
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .neon-box:before {
+        background: rgba(0, 0, 0, 0.7); /* Toujours un fond sombre */
+        border-radius: 15px;
+    }
+
+    /* Masquer l'image de fond et afficher seulement le texte */
+    .neon-box {
+        background-image: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .neon-box .discord-banner {
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        color: white;
+        font-size: 1em; /* Réduire la taille du texte */
+    }
+
+    .neon-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Conteneur pour les jeux */
+.game-container {
+    display: inline-block;
+    width: 30%; /* Taille réduite des jeux */
+    margin: 10px; /* Espacement entre les jeux */
+    position: relative;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Ajout d'une transition pour les effets */
+}
+
+/* Conteneur d'image avec coins arrondis */
+.game-image-container {
+    position: relative;
+    cursor: pointer;
+    width: 100%; /* Prend toute la largeur du conteneur */
+    height: 0;
+    padding-top: 100%; /* Crée un carré parfait */
+    overflow: hidden;
+    border-radius: 20px; /* Coins arrondis */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease; /* Transition douce */
+}
+
+/* Image dans le carré avec coins arrondis */
+.game-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* L'image s'adapte sans déformation */
+    border-radius: 20px; /* Coins arrondis pour l'image */
+    transition: transform 0.3s ease-in-out; /* Transition douce lors de l'effet de zoom */
+}
+
+/* Effet au survol sur le conteneur */
+.game-image-container:hover {
+    transform: scale(1.05); /* Agrandissement léger */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5); /* Ombre portée au survol */
+    opacity: 0.9; /* Légère opacité pour un effet de profondeur */
+}
+
+/* Effet sur l'image au survol */
+.game-image-container:hover .game-image {
+    transform: scale(1.1); /* Zoom sur l'image */
+}
+
+/* Apparition du texte sur l'image */
+.game-text {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transition douce pour le texte */
+}
+
+/* Affichage du texte au survol */
+.game-image-container:hover .game-text {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px); /* Léger mouvement du texte vers le haut */
+}
+
+/* Texte au survol des jeux */
+.game-container:hover {
+    transform: translateY(-5px); /* Légère élévation du carré */
+}
