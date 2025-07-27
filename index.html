@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mon Portfolio Pixel Art</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="profile-header">
+    <img src="img/pdp-pacman.jpg" alt="Photo de profil" class="profile-pic">
+    <div class="pseudo-typewriter" id="pseudo-typewriter"></div>
+    <p>Pixel Artist 2D - Jeux Vidéo</p>
+  </div>
+
+
+  
+
+  <section id="about">
+    <h2>À propos de moi</h2>
+    <p><strong>Hey, moi c’est Pacman ! </strong></p>
+    <p>Je suis un <strong>artiste spécialisé en pixel art 2D</strong> pour les jeux vidéo. <strong>Mon objectif ?</strong></p>
+    <p>Donner <strong>vie</strong> à vos univers avec des <strong>visuels uniques, stylisés et mémorables !</strong></p>
+    <p>Que ce soit pour des personnages, des décors ou des interfaces, je vous aide à créer une ambiance visuelle forte et cohérente pour votre jeu !</p>
+
+  </section>
+
+  <section id="portfolio">
+    <h2>Mes Travaux</h2>
+    <p>Voici quelques exemples de mes créations en pixel art pour des clients :</p>
+    <div class="gallery">
+      <img src="img/cat-walk.gif" alt="chat walk">
+      <img src="img/sapin_pixel.png" alt="sapin">
+      <img src="img/baudo.perso.gif" alt="BAUDOOOO ">
+    </div>
+  </section>
+
+  <section id="services">
+    <h2>Ce que je propose</h2>
+    <ul>
+      <li>Création de sprites 2D</li>
+      <li>Environnements en pixel art</li>
+      <li>UI/menus pixelisés</li>
+    </ul>
+
+    <h2>Et bien plus encore !</h2>
+  </section>
+
+  <section id="contact">
+    <h2>Me contacter</h2>
+    <br>
+    <p>Email : <a href="mailto:tonemail@example.com">csc.pacman@gmail.com</a></p>
+    <p>-</p>
+    <p>Discord : <a href="https://discord.gg/EV5kq3Z9GZ">csc.pacman</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 csc.pacman</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+const pseudo = "Pacman";
+const el = document.getElementById("pseudo-typewriter");
+let i = 0;
+let forward = true;
+
+function typeLoop() {
+  if (forward) {
+    el.textContent = pseudo.slice(0, i++);
+    if (i > pseudo.length) {
+      forward = false;
+      setTimeout(typeLoop, 1000); // pause avant suppression
+      return;
+    }
+  } else {
+    el.textContent = pseudo.slice(0, --i);
+    if (i === 0) {
+      forward = true;
+      setTimeout(typeLoop, 500); // pause avant réécriture
+      return;
+    }
+  }
+  setTimeout(typeLoop, 120);
+}
+typeLoop();
+</script>
+</body>
+</html>
