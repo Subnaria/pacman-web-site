@@ -29,6 +29,8 @@ body {
   border-radius: 12px;
   image-rendering: pixelated;
   box-shadow: 0 0 0 8px #232347, 0 0 0 12px #6c63ff;
+  object-fit: cover;
+  object-position: center;
 }
 
 .pseudo-typewriter {
@@ -214,6 +216,8 @@ section#about p {
     height: 70px;
     border-width: 2px;
     box-shadow: 0 0 0 4px #232347, 0 0 0 6px #6c63ff;
+    object-fit: cover;
+    object-position: center;
   }
   .pseudo-typewriter {
     font-size: 0.9rem;
@@ -264,3 +268,4 @@ body, html {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
