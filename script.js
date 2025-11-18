@@ -1,252 +1,362 @@
-const words = ["Pacman", "Tours📍", "J'aime les jeux vidéos."];
-const el = document.getElementById("pseudo-typewriter");
-let currentWordIndex = 0;
-let i = 0;
-let forward = true;
+/********************************************
+ * 1) TYPEWRITER DU PSEUDO
+ ********************************************/
+const words = ["PacPac", "Tours📍", "J'aime les jeux vidéos."];
+const pseudoEl = document.getElementById("pseudo-typewriter");
+
+let wordIndex = 0, charIndex = 0, forward = true;
 
 function typeLoop() {
-  const currentWord = words[currentWordIndex];
-  
+  const word = words[wordIndex];
+
   if (forward) {
-    el.textContent = currentWord.slice(0, i++);
-    if (i > currentWord.length) {
+    pseudoEl.textContent = word.slice(0, charIndex++);
+    if (charIndex > word.length) {
       forward = false;
-      setTimeout(typeLoop, 1500); // pause avant suppression
-      return;
+      return setTimeout(typeLoop, 1500);
     }
   } else {
-    el.textContent = currentWord.slice(0, --i);
-    if (i === 0) {
+    pseudoEl.textContent = word.slice(0, --charIndex);
+    if (charIndex === 0) {
       forward = true;
-      currentWordIndex = (currentWordIndex + 1) % words.length; // passer au mot suivant
-      setTimeout(typeLoop, 500); // pause avant réécriture
-      return;
+      wordIndex = (wordIndex + 1) % words.length;
+      return setTimeout(typeLoop, 500);
     }
   }
   setTimeout(typeLoop, 120);
 }
 typeLoop();
 
-// Initialisation d'EmailJS
-(function(){
-  emailjs.init("A0Iul7bdapYSlXP1n"); // Remplacez par votre clé publique EmailJS
+
+/********************************************
+ * 2) EMAILJS CONFIG
+ ********************************************/
+(function () {
+  emailjs.init("A0Iul7bdapYSlXP1n");
 })();
 
-// Fonction pour déclencher l'animation de l'avion
+
+/********************************************
+ * 3) ANIMATION AVION
+ ********************************************/
 function triggerPlaneAnimation() {
   const plane = document.getElementById('paper-plane');
-  if (plane) {
-    // Retirer la classe si elle existe déjà
-    plane.classList.remove('flying');
-    
-    // Déclencher l'animation après un petit délai
-    setTimeout(() => {
-      plane.classList.add('flying');
-    }, 100);
-    
-    // Retirer la classe après l'animation pour pouvoir la relancer
-    setTimeout(() => {
-      plane.classList.remove('flying');
-    }, 2200);
-  }
+  if (!plane) return;
+
+  plane.classList.remove('flying');
+  setTimeout(() => plane.classList.add('flying'), 50);
+  setTimeout(() => plane.classList.remove('flying'), 2200);
 }
 
-// Fonction pour envoyer l'email
 
+/********************************************
+ * 4) POPUPS AVEC ANIMATIONS (NOUVELLES)
+ ********************************************/
+function openPopup(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+
+  const content = overlay.querySelector('.popup-content');
+
+  // Montrer la popup
+  overlay.classList.remove('hidden');
+  overlay.classList.add('active'); // ← indispensable pour afficher !
+
+  content.classList.remove('closing');
+}
+
+function closePopup(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+
+  const content = overlay.querySelector('.popup-content');
+
+  // Lancer animation de fermeture
+  content.classList.add('closing');
+  overlay.classList.remove('active');
+  overlay.classList.add('hidden');
+
+  // Reset après animation
+  setTimeout(() => {
+    content.classList.remove('closing');
+  }, 250);
+}
+
+// Fermeture en cliquant hors de la popup
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("popup-overlay")) {
+    closePopup(e.target.id);
+  }
+});
+
+
+// ---- ZOOM + DRAG SUR LES IMAGES DES SERVICES ----
+document.querySelectorAll('.service-card img').forEach(img => {
+  let isDragging = false;
+  let startX, startY;
+  let offsetX = 0, offsetY = 0;
+  let scale = 1;
+  const minZoom = 1;
+  const maxZoom = 3;
+
+  // ----- Drag -----
+  img.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    img.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    img.style.cursor = 'grab';
+
+    // rebond
+    img.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+    scale = 1;
+    offsetX = 0;
+    offsetY = 0;
+    img.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+
+    setTimeout(() => img.style.transition = 'transform 0.2s ease', 600);
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    startX = e.clientX;
+    startY = e.clientY;
+
+    offsetX += dx;
+    offsetY += dy;
+
+    img.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+  });
+
+  // ----- Wheel Zoom + blocage scroll -----
+  img.addEventListener('wheel', (e) => {
+    if (!isDragging) return; // zoom uniquement pendant le clic maintenu
+    e.preventDefault();       // bloque scroll fond
+
+    const rect = img.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const zoomAmount = e.deltaY < 0 ? 0.1 : -0.1;
+    let newScale = Math.min(maxZoom, Math.max(minZoom, scale + zoomAmount));
+    if (newScale === scale) return;
+
+    offsetX -= (mouseX - rect.width / 2) * (newScale - scale) / newScale;
+    offsetY -= (mouseY - rect.height / 2) * (newScale - scale) / newScale;
+
+    scale = newScale;
+    img.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+  }, { passive: false }); // nécessaire pour preventDefault
+
+  // ----- Touch support -----
+  img.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  });
+
+  img.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+
+    offsetX += dx;
+    offsetY += dy;
+
+    img.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+  });
+
+  img.addEventListener('touchend', () => {
+    isDragging = false;
+
+    // rebond
+    img.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+    scale = 1;
+    offsetX = 0;
+    offsetY = 0;
+    img.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+
+    setTimeout(() => img.style.transition = 'transform 0.2s ease', 600);
+  });
+});
+
+/********************************************
+ * 5) ENVOI MAIL AVEC EMAILJS + LIMITE IP
+ ********************************************/
 async function sendMail() {
-  const submitBtn = document.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
+  const btn = document.querySelector('.submit-btn');
+  const originalText = btn.textContent;
 
-  // Récupérer l'IP du visiteur
-  let ip = '';
+  // Vérifier si CAPTCHA validé
+  const recaptchaResponse = grecaptcha.getResponse();
+  if (!recaptchaResponse) {
+    return alert("❌ Veuillez confirmer que vous êtes un humain !");
+  }
+
+  // Récupérer IP
+  let ip = "";
   try {
     const res = await fetch('https://api.ipify.org?format=json');
-    const data = await res.json();
-    ip = data.ip;
+    ip = (await res.json()).ip;
   } catch (e) {
-    alert("Impossible de récupérer votre IP, réessayez plus tard.");
+    alert("Impossible de récupérer votre IP.");
     return;
   }
 
-  // Vérifier le nombre d'envois pour cette IP
-  let mailCount = 0;
-  const mailLimitKey = 'mailCount_' + ip;
-  if (localStorage.getItem(mailLimitKey)) {
-    mailCount = parseInt(localStorage.getItem(mailLimitKey), 10) || 0;
-  }
-  if (mailCount >= 3) {
-    alert("❌ Limite atteinte : vous ne pouvez envoyer que 3 messages.");
-    return;
-  }
+  // Limite d'envoi
+  const key = 'mailCount_' + ip;
+  const count = parseInt(localStorage.getItem(key) || "0");
+  if (count >= 3) return alert("❌ Vous avez atteint la limite de 3 messages.");
 
-  // Déclencher l'animation de l'avion immédiatement
+  // Animation avion
   triggerPlaneAnimation();
 
-  // Désactiver le bouton et changer le texte
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Envoi en cours...";
+  btn.disabled = true;
+  btn.textContent = "Envoi en cours...";
 
-  emailjs.send("service_4cr16m3","template_3zgcmq4",{
-    nom: document.getElementById("nom").value,
-    prenom: document.getElementById("prenom").value,
-    email: document.getElementById("email").value,
-    objet: document.getElementById("objet").value,
-    message: document.getElementById("message").value,
-    ip: ip
-  }).then(function() {
-    // Incrémenter le compteur d'envois
-    localStorage.setItem(mailLimitKey, mailCount + 1);
-    alert("✅ Message envoyé avec succès !");
+  emailjs.send("service_4cr16m3", "template_3zgcmq4", {
+    nom: nom.value,
+    prenom: prenom.value,
+    email: email.value,
+    objet: objet.value,
+    message: message.value,
+    ip: ip,
+    'g-recaptcha-response': recaptchaResponse // on envoie aussi la réponse au serveur si besoin
+  }).then(() => {
+    localStorage.setItem(key, count + 1);
+    alert("✅ Message envoyé !");
     document.getElementById("contact-form").reset();
-  }, function(error) {
-    alert("❌ Erreur lors de l'envoi : " + error);
-  }).finally(function() {
-    // Réactiver le bouton
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
+    grecaptcha.reset(); // reset CAPTCHA pour le prochain envoi
+  }).catch(err => {
+    alert("❌ Erreur : " + err);
+  }).finally(() => {
+    btn.disabled = false;
+    btn.textContent = originalText;
   });
 }
 
-// Gestion des onglets de la section procédure
+/********************************************
+ * 6) SYSTEME D'ONGLETS : PROCEDURE
+ ********************************************/
 function switchTab(tabName) {
-  // Masquer tous les contenus
-  const allContents = document.querySelectorAll('.procedure-mode');
-  allContents.forEach(content => content.classList.remove('active'));
-  
-  // Désactiver tous les boutons
-  const allTabs = document.querySelectorAll('.tab-btn');
-  allTabs.forEach(tab => tab.classList.remove('active'));
-  
-  // Afficher le contenu sélectionné
-  const targetContent = document.getElementById(tabName + '-content');
-  if (targetContent) {
-    targetContent.classList.add('active');
-  }
-  
-  // Activer le bouton sélectionné
-  const targetTab = document.querySelector(`[data-tab="${tabName}"]`);
-  if (targetTab) {
-    targetTab.classList.add('active');
-  }
+  document.querySelectorAll('.procedure-mode')
+    .forEach(el => el.classList.remove('active'));
+
+  document.querySelectorAll('.tab-btn')
+    .forEach(el => el.classList.remove('active'));
+
+  document.getElementById(tabName + '-content')?.classList.add('active');
+  document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
 }
 
-// Gestion du formulaire de contact
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Animation fade-in au scroll sur chaque élément du contenu des avis
-  const avisElements = document.querySelectorAll('.testimonial-content > *, .testimonial-author > *');
-  avisElements.forEach(el => {
-    el.classList.add('scroll-appear');
-  });
-  // Animation en cascade sur chaque élément du contenu des avis
+/********************************************
+ * 7) ANIMATIONS SCROLL + INTRO
+ ********************************************/
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* Fade-in en cascade (avis) */
   const testimonialItems = document.querySelectorAll('.testimonial-item');
   testimonialItems.forEach(item => {
-    const contentEls = item.querySelectorAll('.testimonial-content > *, .testimonial-author > *');
-    contentEls.forEach((el, i) => {
+    const elements = item.querySelectorAll('.testimonial-content > *, .testimonial-author > *');
+    elements.forEach((el, i) => {
       el.classList.add('fadein-section');
-      setTimeout(() => {
-        el.classList.add('visible');
-      }, 400 + i * 250);
+      setTimeout(() => el.classList.add('visible'), 400 + i * 250);
     });
   });
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      sendMail();
+
+  /* Apparition des sections principales */
+  const sections = [
+    document.querySelector('.profile-header'),
+    ...document.querySelectorAll('section'),
+    document.querySelector('footer')
+  ];
+  sections.forEach((el, i) => {
+    if (!el) return;
+    el.classList.add('fadein-section');
+
+    setTimeout(() => {
+      el.classList.add('visible');
+
+      if (el.id === 'about') {
+        const title = el.querySelector('h1');
+        const paragraphs = el.querySelectorAll('p');
+
+        if (title) {
+          title.classList.add('fadein-section');
+          setTimeout(() => title.classList.add('visible'), 200);
+        }
+
+        paragraphs.forEach((p, idx) => {
+          p.classList.add('fadein-section');
+          setTimeout(() => p.classList.add('visible'), 600 + idx * 350);
+        });
+      }
+    }, 800 + i * 900);
+  });
+
+  /* Scroll reveal */
+  const scrollElements = [];
+  [
+    '.profile-header > *',
+    'section#about > *',
+    'section#portfolio > *',
+    'section#services > *',
+    'section#procedure > *',
+    'section#avis > *',
+    'section#contact > *',
+    'footer > *'
+  ].forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.classList.add('scroll-appear');
+      scrollElements.push(el);
+    });
+  });
+
+  function revealOnScroll() {
+    scrollElements.forEach(el => {
+      const pos = el.getBoundingClientRect();
+      if (pos.top < window.innerHeight && pos.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        el.classList.remove('visible');
+      }
     });
   }
 
-    // Animation d'intro fade-in sur les sections principales
-    const mainSections = [
-      document.querySelector('.profile-header'),
-      ...document.querySelectorAll('section'),
-      document.querySelector('footer')
-    ];
-    mainSections.forEach((el, idx) => {
-      if (el) {
-        el.classList.add('fadein-section');
-        setTimeout(() => {
-          el.classList.add('visible');
-          // Animation cascade sur about
-          if (el.id === 'about') {
-            const aboutTitle = el.querySelector('h1');
-            const aboutParagraphs = el.querySelectorAll('p');
-            if (aboutTitle) {
-              aboutTitle.classList.add('fadein-section');
-              setTimeout(() => {
-                aboutTitle.classList.add('visible');
-              }, 200);
-            }
-            aboutParagraphs.forEach((p, i) => {
-              p.classList.add('fadein-section');
-              setTimeout(() => {
-                p.classList.add('visible');
-              }, 600 + i * 350);
-            });
-          }
-        }, 800 + idx * 900); // décalage plus lent
-      }
-    });
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('resize', revealOnScroll);
+  setTimeout(revealOnScroll, 1200);
 
-    // Animation d'apparition au scroll pour les éléments internes
-    const animatedSelectors = [
-      '.profile-header > *',
-      'section#about > *',
-      'section#portfolio > *',
-      'section#services > *',
-      'section#procedure > *',
-      'section#avis > *',
-      'section#contact > *',
-      'footer > *'
-    ];
-    const animatedElements = [];
-    animatedSelectors.forEach(sel => {
-      document.querySelectorAll(sel).forEach(el => {
-        el.classList.add('scroll-appear');
-        animatedElements.push(el);
-      });
-    });
-
-    function revealOnScroll() {
-      animatedElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom > 0 && rect.top < window.innerHeight) {
-          el.classList.add('visible');
-        } else {
-          el.classList.remove('visible');
-        }
-      });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('resize', revealOnScroll);
-    setTimeout(revealOnScroll, 1200); // Pour le chargement initial, après l'intro
-
-  // Gestion des clics sur les onglets
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  tabButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const tabName = this.getAttribute('data-tab');
-      switchTab(tabName);
-    });
+  /* Tabs */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // Gestion de la modale d'avis client
-  const testimonials = document.querySelectorAll('.testimonial-item');
+  /********************************************
+   * 8) MODALE AVIS CLIENTS
+   ********************************************/
   const modal = document.getElementById('testimonial-modal');
   const modalClose = document.getElementById('testimonial-modal-close');
-  const modalPic = document.getElementById('modal-client-pic');
-  const modalName = document.getElementById('modal-client-name');
-  const modalProfession = document.getElementById('modal-client-profession');
-  const modalReview = document.getElementById('modal-client-review');
 
-  // Données clients (à compléter selon les avis)
   const clientData = [
     {
       pic: 'Assets/img/logo/baudo-pdp.jpg',
       name: 'Baudo',
       profession: 'Youtubeur / Game designer',
-      review: '« Il m’a créé un site complet ultra clean sans même que je sois au courant mdr ! C’est très quali et ça marche nickel, je recommande le bro ! »'
+      review: '« Il m’a créé un site complet ultra clean sans même que je sois au courant mdr ! C’est très quali et ça marche nickel, je recommande le bro ! »'
     },
     {
       pic: 'Assets/img/logo/white-logo.jpg',
@@ -262,27 +372,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   ];
 
-testimonials.forEach((item, idx) => {
-  item.addEventListener('click', function () {
-    const data = clientData[idx];
-    modalPic.src = data.pic;
-    modalName.textContent = data.name;
-    modalProfession.textContent = data.profession;
-    modalReview.textContent = data.review;
+  document.querySelectorAll('.testimonial-item').forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      const data = clientData[idx];
 
-    modal.classList.add('show'); // ajoute la classe qui déclenche le fade-in
+      document.getElementById('modal-client-pic').src = data.pic;
+      document.getElementById('modal-client-name').textContent = data.name;
+      document.getElementById('modal-client-profession').textContent = data.profession;
+      document.getElementById('modal-client-review').textContent = data.review;
+
+      modal.classList.add('show'); // fade-in
+    });
   });
-});
 
-// Fermer la modale via le bouton
-modalClose.addEventListener('click', function () {
-  modal.classList.remove('show'); // fade-out
-});
+  modalClose.addEventListener('click', () => modal.classList.remove('show'));
 
-// Fermer la modale en cliquant à l'extérieur
-window.addEventListener('click', function (e) {
-  if (e.target === modal) {
-    modal.classList.remove('show'); // fade-out
-  }
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
   });
+
 });
