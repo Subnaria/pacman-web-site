@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pacman | Pixel Artist 2D & Web Designer</title>
-  <meta name="description" content="Portfolio de Pacman, artiste spécialisé en pixel art 2D et Futur Web designer. Découvrez mes créations, services et contactez-moi pour vos projets !">
-  <meta name="keywords" content="pixel art, portfolio, artiste, 2D, jeux vidéo, web designer, sprites, UI, environnement, Pacman">
-  <meta name="author" content="Pacman">
+  <title>PacPac | Pixel Artist 2D & Futur Web Designer</title>
+  <meta name="description" content="Portfolio de PacPac, artiste spécialisé en pixel art 2D et Futur Web designer. Découvrez mes créations, services et contactez-moi pour vos projets !">
+  <meta name="keywords" content="pixel art, portfolio, artiste, 2D, jeux vidéo, web designer, sprites, UI, environnement, PacPac">
+  <meta name="author" content="Pacman" />
   <link rel="canonical" href="https://cscpacman.fr/" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" sizes="32x32" href="Assets/img/logo/pdp_pacman.jpg" />
@@ -22,16 +22,77 @@
   <main>
     <section id="about">
       <h1>À propos de moi</h1>
-      <p><span class="highlight">Hey, moi c'est Pacman !</span></p>
+      <p><span class="highlight">Hey, moi c'est Pacman (PacPac) !</span></p>
       <p>Je suis un <span class="highlight">artiste spécialisé en pixel art 2D</span> pour les jeux vidéo. <span class="highlight">Mon objectif ?</span></p>
       <p>Que ce soit pour des personnages, des décors ou des interfaces, je vous aide à créer une <span class="highlight">ambiance visuelle forte et cohérente</span> pour votre jeu !</p>
       <p>---------------------</p>
-      <p>Je peux aussi vous aider à créer votre <span class="highlight">site web de A à Z</span> !</p>
-      <p>Donner <span class="highlight">vie</span> à votre pro/média avec des <span class="highlight">visuels uniques, stylisés et mémorables !</span></p>
+      <p>Je peux aussi vous aider à créer votre <span class="highlight">site web de A à Z (Static)</span> !</p>
+      <p>Donner <span class="highlight">vie</span> à votre projet/média avec des <span class="highlight">visuels uniques, stylisés et mémorables !</span></p>
       <p><span class="highlight">Actuellement</span>, je propose la <span class="highlight">création de sites web gratuitement</span> pour les projets <strong>concrets</strong> et <strong>sérieux</strong>, afin de <span>gagner</span> en <span>expérience</span>. <br>
       <span class="highlight">N'hésitez pas à en profiter !</span>
       </p>
     </section>
+
+
+        <section id="services">
+      <h2>Ce que je propose</h2>
+      <ul>
+        <li onclick="openPopup('popup-sprites')">Création de sprites 2D</li>
+        <li onclick="openPopup('popup-hosting')">Hébergement de site</li>
+        <li onclick="openPopup('popup-web')">Création de sites web</li>
+      </ul>
+      <h2>Et bien plus encore !</h2>
+    </section>
+
+        <!-- POPUP SPRITES -->
+    <div id="popup-sprites" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup('popup-sprites')">&times;</span>
+        <h2>Création de sprites 2D</h2>
+        <p>Je réalise des <span class="highlight">sprites 2D pixel par pixel</span> avec <span class="highlight">Aseprite</span> ou 
+          <span class="highlight">Photoshop</span> afin d’obtenir un <span class="highlight">rendu précis</span> et <span class="highlight">adapté aux jeux vidéo</span>.</p>
+        <div class="service-exemples">
+          <div class="service-card"><img src="Assets/img/other/branding-tile-sheet.png"><p>Exemple de Tile Sheet</p></div>
+          <div class="service-card"><img src="Assets/img/other/branding-cat-walk.gif"><p>Rendu Sprite</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP HEBERGEMENT -->
+    <div id="popup-hosting" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup('popup-hosting')">&times;</span>
+        <h2>Hébergement de vos site</h2>
+        <p>
+          Je propose un <span class="highlight">hébergement sécurisé</span>,
+           <span class="highlight">rapide</span> et <span class="highlight">adapté</span> à vos <span class="highlight">besoins</span>,
+           avec <span class="highlight">suivi</span> et <span class="highlight">maintenance inclus.</span></p>
+        <div class="service-exemples">
+          <div class="service-card">
+            <img src="Assets/img/other/cloudflare-branding.webp">
+              <p class="description">Site sécurisé par Cloudfare</p></div>
+          <div class="service-card">
+            <img src="Assets/img/other/branding-nas-github.png">
+              <p class="description">Hébergement via github ou NAS</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP CREATION SITE WEB -->
+    <div id="popup-web" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup('popup-web')">&times;</span>
+        <h2>Création de sites web</h2>
+        <p>
+          Je crée des <span class="highlight">sites modernes</span>, 
+          <span class="highlight">rapides</span>, <span class="highlight">optimisés SEO</span> et <span class="highlight">adaptés à tous les supports </span>(ordinateur, tablette, téléphone).</p>
+        <div class="service-exemples">
+          <div class="service-card"><img src="Assets/img/other/screenshot-baudo-site.png"><p>Exemple d'un <a id="pub" href="https://baudo.cscpacman.fr/" target="_blank">site</a> réalisé par mes soins</p></div>
+          <div class="service-card"><img src="Assets/img/other/branding-code.png"><p>Utilisation de Visual Studio code</p></div>
+        </div>
+      </div>
+    </div>
 
     <section id="portfolio">
       <h2>Mes Travaux</h2>
@@ -60,19 +121,6 @@
           </a>
       </div>
     </section>
-
-
-    <section id="services">
-      <h2>Ce que je propose</h2>
-      <ul>
-        <li>Création de sprites 2D</li>
-        <li>Environnements en pixel art</li>
-        <li>Hébergement de site</li>
-        <li>Création de sites web</li>
-      </ul>
-      <h2>Et bien plus encore !</h2>
-    </section>
-
 
     <section id="procedure">
       <h2>Ma procédure de réalisation</h2>
@@ -178,7 +226,6 @@
       <h2>Me contacter</h2>
       <div class="contact-info">
         <p>E-mail : <a href="mailto:csc.pacman@gmail.com">csc.pacman@gmail.com</a></p>
-        <p>Discord : <a href="https://discord.gg/EV5kq3Z9GZ">csc.pacman</a></p>
       </div>
 
       <h3>-----------------</h3>
@@ -212,15 +259,22 @@
             <textarea id="message" name="message" rows="4" required></textarea>
           </div>
 
+          <!-- juste avant le bouton envoyer -->
+          <div class="g-recaptcha" 
+              data-sitekey="6Le9DREsAAAAAFvGlS0zqIOk4uxnfuNoY4E03xrq" 
+              data-callback="onCaptchaSuccess">
+          </div>
+
           <button type="submit" class="submit-btn">
-            Envoyer le message
-        </form>
+              Envoyer le message
+          </button>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>2025 Pac Pac. Crédit à <a href="https://baudo.cscpacman.fr/">Baudo</a> pour le design de son personnage.</p>
+    <p>&copy; 2025 cscpacman - Tous droits réservés. Crée avec ❤️ par <a id="pub" href="https://cscpacman.fr/" target="_blank">csc.pacman</a></p>
+    <p> Crédit à <a href="https://baudo.cscpacman.fr/">Baudo</a> pour le design de son personnage.</p>
   </footer>
 
   
@@ -244,6 +298,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="script.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
-
 </html>
