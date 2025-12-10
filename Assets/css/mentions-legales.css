@@ -87,3 +87,25 @@ header > *, section > *, footer > * {
 header > *, section > *, footer > * {
   animation-delay: calc(var(--i) * 0.15s);
 }
+
+/* Responsive pour téléphones */
+@media only screen and (max-width: 600px) {
+  header, section, footer {
+    margin: 2rem 1rem; /* réduire les marges latérales */
+    padding: 1.5rem;    /* réduire un peu le padding */
+  }
+
+  h1, h2 {
+    font-size: 1rem;   /* texte plus petit */
+    letter-spacing: 1px;
+  }
+
+  .back {
+    font-size: 1rem;  /* bouton retour plus adapté */
+  }
+
+  p, a {
+    font-size: 0.6rem; /* texte plus lisible sur petit écran */
+    line-height: 1.4;
+  }
+}
